@@ -24,15 +24,18 @@ engine = [
     "jinja2",
 ]
 
-airflow = [
+# airflow = [
     # airflow must be <3 in order for datahub's integration to work as of 2025-07-01
-    "apache-airflow<3",
-    "apache-airflow-providers-amazon>=9.9.0",
-]
+    # "apache-airflow>=2.7.0,<3",
+    # "apache-airflow-providers-amazon>=9.9.0",
+# ]
 datahub = [
     "acryl-datahub>=1.1.0.4",
 ]
 prefect = [
+    "prefect>=3.0.0",
+    "boto3>=1.28.0",
+    "pyzipper>=0.3.6",
     "ipykernel>=6.29.5",
     "rich>=13.9.4",
     "pytest>=8.3.5",
@@ -54,7 +57,39 @@ cdk = [
     "constructs>=10.4.2",
 ]
 
-dev = ["kiro-insbridge[prefect,engine,airflow]"]
+dev = [
+    # Engine dependencies
+    "pydantic-settings>=2.8.1",
+    "tabulate>=0.9.0",
+    "cloudpickle>=3.1.1",
+    "pylint>=3.3.6",
+    "xmltodict",
+    "pathlib",
+    "xml_utils",
+    "absl-py",
+    "pyyaml",
+    "loguru==0.7.3",
+    "jsonschema",
+    "jinja2",
+    # Prefect dependencies
+    "prefect>=3.0.0",
+    "boto3>=1.28.0",
+    "pyzipper>=0.3.6",
+    "ipykernel>=6.29.5",
+    "rich>=13.9.4",
+    "pytest>=8.3.5",
+    "pytest-mock>=3.14.0",
+    "scikit-learn>=1.6.1",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=0.25.3",
+    "flake8-pyproject>=1.2.3",
+    "pyink>=24.10.1",
+    "google-cloud-aiplatform[evaluation]>=1.88.0",
+    "pre-commit",
+    "types-xmltodict",
+    "types-PyYAML",
+    "types-jsonschema",
+]
 
 [build-system]
 requires = ["hatchling"]

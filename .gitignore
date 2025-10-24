@@ -13,3 +13,6 @@ wheels/
 .venv
 temp
 .env
+**/**SRP**.srp
+**/**.srp
+data/**

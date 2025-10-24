@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
-from enterprise_rating.entities.dependency import DependencyBase
-from enterprise_rating.entities.instruction import Instruction
+from kiro_insbridge.enterprise_rating.entities.dependency import DependencyBase
+from kiro_insbridge.enterprise_rating.entities.instruction import Instruction
 
 
 class Algorithm(BaseModel):

@@ -1,26 +1,33 @@
 
 
+
+
 from pydantic import BaseModel, ConfigDict
 
-from enterprise_rating.entities.srp_user import SrpUser
+from kiro_insbridge.enterprise_rating.entities.srp_request_user import SrpRequestUser
 
 
 class SrpRequest(BaseModel):
-    user : SrpUser
-    prog_key: str
-    build_type: str
-    location: str
-    carrier_id: str
-    carrier_name: str
-    line_id: str
-    line_desc: str
-    schema_id: str
-    program_id: str
-    program_name: str
-    version_desc: str
-    program_version: str
-    parent_company: str
+    schema: str | None = None
+    prog_key: str | None = None
+    build_type: str | None = None
+    location: str | None = None
+    carrier_id: str | None = None
+    carrier_name: str | None = None
+    line_id: str | None = None
+    line_desc: str | None = None
+    schema_id: str | None = None
+    program_id: str | None = None
+    program_name: str | None = None
+    version_desc: str | None = None
+    program_version: str | None = None
+    parent_company: str | None = None
     notes: str | None = None
     date_created_split: str | None = None
     date_created: str | None = None
     model_config = ConfigDict(from_attributes=True)
+
+class Srp(BaseModel):
+    srp_header: SrpRequest
+    srpuser: SrpRequestUser
+    model_config = ConfigDict(extra="ignore", from_attributes=True)

@@ -3,7 +3,7 @@
 
 from pydantic import BaseModel
 
-from enterprise_rating.ast_decoder.ast_nodes import ASTNode
+from kiro_insbridge.enterprise_rating.ast_decoder.ast_nodes import ASTNode
 
 
 class InstructionAst(BaseModel):

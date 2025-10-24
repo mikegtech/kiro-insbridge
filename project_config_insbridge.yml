@@ -1,0 +1,29 @@
+# Project Configuration for kiro-insbridge
+
+local:
+  catalog_name: "local_catalog"
+  schema_name: "srp_data"
+  pipeline_id: "srp-zip-hourly"
+  s3:
+    enabled: false # Set to true when you want to use S3
+
+dev:
+  catalog_name: "dev_catalog"
+  schema_name: "srp_data"
+  pipeline_id: "srp-zip-hourly"
+  s3:
+    enabled: true
+
+acc:
+  catalog_name: "acc_catalog"
+  schema_name: "srp_data"
+  pipeline_id: "srp-zip-hourly"
+  s3:
+    enabled: true
+
+prd:
+  catalog_name: "prd_catalog"
+  schema_name: "srp_data"
+  pipeline_id: "srp-zip-hourly"
+  s3:
+    enabled: true

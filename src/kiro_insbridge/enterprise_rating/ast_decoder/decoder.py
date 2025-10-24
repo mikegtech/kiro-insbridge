@@ -1,9 +1,9 @@
 # enterprise_rating/ast_decoder/decoder.py
 
-from enterprise_rating.ast_decoder.helpers.ins_helpers import get_ins_type_def
-from enterprise_rating.entities.algorithm import Algorithm
-from enterprise_rating.entities.dependency import DependencyBase
-from enterprise_rating.entities.program_version import ProgramVersion
+from kiro_insbridge.enterprise_rating.ast_decoder.helpers.ins_helpers import get_ins_type_def
+from kiro_insbridge.enterprise_rating.entities.algorithm import Algorithm
+from kiro_insbridge.enterprise_rating.entities.dependency import DependencyBase
+from kiro_insbridge.enterprise_rating.entities.program_version import ProgramVersion
 
 from .parser import parse
 from .tokenizer import tokenize

@@ -1,6 +1,6 @@
 from typing import NamedTuple
 
-from enterprise_rating.ast_decoder.defs import InsType
+from kiro_insbridge.enterprise_rating.ast_decoder.defs import InsType
 
 
 class ParseResult(NamedTuple):

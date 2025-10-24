@@ -1,9 +1,9 @@
 # enterprise_rating/ast_decoder/helpers/var_lookup.py
 
-from enterprise_rating.ast_decoder.defs import split_var_token
-from enterprise_rating.entities.algorithm import Algorithm
-from enterprise_rating.entities.dependency import DependencyBase
-from enterprise_rating.entities.program_version import ProgramVersion
+from kiro_insbridge.enterprise_rating.ast_decoder.defs import split_var_token
+from kiro_insbridge.enterprise_rating.entities.algorithm import Algorithm
+from kiro_insbridge.enterprise_rating.entities.dependency import DependencyBase
+from kiro_insbridge.enterprise_rating.entities.program_version import ProgramVersion
 
 
 def get_target_var_desc(target_var: str,dep: Algorithm | DependencyBase | None = None) -> str:

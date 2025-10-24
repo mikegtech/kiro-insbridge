@@ -22,8 +22,6 @@ function clean {
         -o -name "*.dist-info" \
         -o -name "*.egg-info" \
         -o -name "*htmlcov" \
-        -o -name "*.metaflow" \
-        -o -name "*.metaflow.s3" \
         -o -name "*.mypy_cache" \
         -o -name "*.pytest_cache" \
         -o -name "*.ruff_cache" \

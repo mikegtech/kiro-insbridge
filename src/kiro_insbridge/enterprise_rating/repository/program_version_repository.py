@@ -5,7 +5,7 @@ from pathlib import Path
 
 import xmltodict
 
-from enterprise_rating.ast_decoder.ast_nodes import (
+from kiro_insbridge.enterprise_rating.ast_decoder.ast_nodes import (
     ArithmeticNode,
     AssignmentNode,
     CompareNode,
@@ -13,9 +13,9 @@ from enterprise_rating.ast_decoder.ast_nodes import (
     IfNode,
     RawNode,
 )
-from enterprise_rating.ast_decoder.decoder import decode_ins  # noqa: F401
-from enterprise_rating.entities.dependency import CalculatedVariable, DependencyBase
-from enterprise_rating.entities.program_version import ProgramVersion  # wherever you defined your Pydantic models
+from kiro_insbridge.enterprise_rating.ast_decoder.decoder import decode_ins  # noqa: F401
+from kiro_insbridge.enterprise_rating.entities.dependency import CalculatedVariable, DependencyBase
+from kiro_insbridge.enterprise_rating.entities.program_version import ProgramVersion  # wherever you defined your Pydantic models
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +23,10 @@ logger = logging.getLogger(__name__)
 class ProgramVersionRepository:  # noqa: D101
     _NO_ARG = object()
 
+    # XML_FILE is optional - only needed for get_program_version() method
+    # The new get_program_version_from_path() method accepts path as parameter
     env_xml = os.environ.get("PROGRAM_VERSION_XML")
-    if env_xml is None:
-        raise RuntimeError(
-            "Environment variable 'PROGRAM_VERSION_XML' is not set."
-        )
-    XML_FILE = Path(env_xml)
+    XML_FILE = Path(env_xml) if env_xml else None
 
     # Define attribute maps per entity
     ATTRIBUTE_MAPS = {
@@ -317,6 +315,11 @@ class ProgramVersionRepository:  # noqa: D101
 
     @staticmethod
     def get_program_version(lob: str, progId: str, progVer: str) -> ProgramVersion | None:
+        if ProgramVersionRepository.XML_FILE is None:
+            raise RuntimeError(
+                "Environment variable 'PROGRAM_VERSION_XML' is not set. "
+                "Either set this variable or use get_program_version_from_path() instead."
+            )
         with open(ProgramVersionRepository.XML_FILE, encoding="utf-8") as f:
             doc = xmltodict.parse(
                 f.read(), postprocessor=ProgramVersionRepository._entity_aware_postprocessor, force_list=("seq", "dependency_vars", "steps", "i", "ast")
@@ -332,4 +335,36 @@ class ProgramVersionRepository:  # noqa: D101
 
         # Extract the relevant data for the ProgramVersion entity
         # Let Pydantic coerce types, apply defaults, and validate
+        return progver
+
+    @staticmethod
+    def get_program_version_from_path(rte_xml_path: Path) -> ProgramVersion | None:
+        """Parse program version from a specific RTE XML file path.
+
+        Args:
+            rte_xml_path: Path to the RTE XML file (e.g., AEBB715809.xml)
+
+        Returns:
+            ProgramVersion object or None if parsing fails
+        """
+        if not rte_xml_path.exists():
+            logger.error(f"RTE XML file not found: {rte_xml_path}")
+            return None
+
+        with open(rte_xml_path, encoding="utf-8") as f:
+            doc = xmltodict.parse(
+                f.read(),
+                postprocessor=ProgramVersionRepository._entity_aware_postprocessor,
+                force_list=("seq", "dependency_vars", "steps", "i", "ast")
+            )
+
+        progver_data = doc.get("export", {})
+
+        if progver_data is None:
+            logger.warning(f"No 'export' element found in {rte_xml_path}")
+            return None
+
+        progver = ProgramVersion.model_validate(progver_data)
+        ProgramVersionRepository.process_all_instructions(progver)
+
         return progver

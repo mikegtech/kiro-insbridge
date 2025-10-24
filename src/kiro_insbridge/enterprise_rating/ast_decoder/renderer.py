@@ -3,7 +3,7 @@ from pathlib import Path
 import yaml
 from jinja2 import Template
 
-from enterprise_rating.ast_decoder.ast_nodes import (ArithmeticNode,
+from kiro_insbridge.enterprise_rating.ast_decoder.ast_nodes import (ArithmeticNode,
                                                      AssignmentNode,
                                                      FunctionNode, IfNode,
                                                      JumpNode)

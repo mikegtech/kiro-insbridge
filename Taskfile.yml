@@ -1,0 +1,114 @@
+version: "3"
+dotenv: [.env]
+vars:
+  PYTHON_VERSION: "3.12" # Change this to your desired Python version
+
+tasks:
+  pin-python:
+    desc: Pin Python version using uv
+    cmds:
+      - uv python pin {{.PYTHON_VERSION}}
+
+  sync-dev:
+    desc: Sync development dependencies using uv
+    cmds:
+      - uv sync --group dev
+
+  sync-prefect:
+    desc: Sync prefect and engine dependencies
+    cmds:
+      - uv sync --group prefect --group engine
+
+  sync:
+    desc: Sync production dependencies only
+    cmds:
+      - uv sync
+
+  install:
+    desc: Install the project in development mode
+    cmds:
+      - uv sync --group dev
+
+  clean:
+    desc: Clean up virtual environment and cache
+    cmds:
+      - uv cache clean
+      - rm -rf .venv
+
+  databricks:login:
+    desc: Login to Databricks
+    cmds:
+      - databricks auth login --host {{.DATABRICKS_HOST}}
+
+  lint:
+    desc: Run pre-commit hooks
+    cmds:
+      - uvx --from pre-commit pre-commit run --all-files
+
+  flow:srp-zip:
+    desc: "Run the SRP zip-to-S3 flow (extract and upload SRP packages)"
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+
+  flow:srp-zip:dev:
+    desc: "Run the SRP zip-to-S3 flow in local/dev environment"
+    dir: "{{.USER_WORKING_DIR}}"
+    env:
+      ENVIRONMENT: local
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+
+  flow:version-export:
+    desc: "Run the version export flow (process .srtp files and extract program versions)"
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/version-export/hourly.py
+
+  flow:version-export:dev:
+    desc: "Run the version export flow in local/dev environment"
+    dir: "{{.USER_WORKING_DIR}}"
+    env:
+      ENVIRONMENT: local
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/version-export/hourly.py
+
+  flow:pipeline:
+    desc: "Run the complete pipeline (SRP zip-to-S3 then version export)"
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+      - uv run python ./src/kiro_insbridge/prefect/dags/version-export/hourly.py
+
+  flow:pipeline:dev:
+    desc: "Run the complete pipeline in local/dev environment"
+    dir: "{{.USER_WORKING_DIR}}"
+    env:
+      ENVIRONMENT: local
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+      - uv run python ./src/kiro_insbridge/prefect/dags/version-export/hourly.py
+
+  flow:hourly:
+    desc: "Run the SRP hourly flow (ingest optional, then load) - DEPRECATED: use flow:srp-zip"
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+
+  flow:hourly:dev:
+    desc: "Run the SRP hourly flow in local/dev environment - DEPRECATED: use flow:srp-zip:dev"
+    dir: "{{.USER_WORKING_DIR}}"
+    env:
+      ENVIRONMENT: local
+    cmds:
+      - uv run python ./src/kiro_insbridge/prefect/dags/srp-zip/hourly.py
+
+  prefect:server:
+    desc: "Start local Prefect server"
+    cmds:
+      - uv run prefect server start
+
+  prefect:deploy:
+    desc: "Deploy Prefect flows"
+    cmds:
+      - uv run prefect deploy --all

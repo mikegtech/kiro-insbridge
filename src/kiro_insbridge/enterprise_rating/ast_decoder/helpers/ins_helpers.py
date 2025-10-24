@@ -1,4 +1,4 @@
-from enterprise_rating.ast_decoder.defs import InsType
+from kiro_insbridge.enterprise_rating.ast_decoder.defs import InsType
 
 
 def decode_filter_rule(filter_rule: str, dependency_var_writer, dependency_list) -> None:

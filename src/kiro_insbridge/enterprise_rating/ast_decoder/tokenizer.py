@@ -5,8 +5,8 @@ import re
 from collections.abc import Callable
 from typing import NamedTuple
 
-from enterprise_rating.ast_decoder.helpers.parse_result import find_next_var
-from enterprise_rating.ast_decoder.helpers.var_lookup import get_var_desc
+from kiro_insbridge.enterprise_rating.ast_decoder.helpers.parse_result import find_next_var
+from kiro_insbridge.enterprise_rating.ast_decoder.helpers.var_lookup import get_var_desc
 
 from .defs import InsType
 

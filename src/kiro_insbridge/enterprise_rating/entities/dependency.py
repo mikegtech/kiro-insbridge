@@ -4,7 +4,7 @@ from typing import Annotated, Literal, get_args
 
 from pydantic import BaseModel, Field
 
-from enterprise_rating.entities.instruction import Instruction
+from kiro_insbridge.enterprise_rating.entities.instruction import Instruction
 
 
 class DependencyBase(BaseModel):

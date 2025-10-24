@@ -1,8 +1,8 @@
 from pydantic import BaseModel, ConfigDict
 
-from enterprise_rating.entities.algorithm import AlgorithmSequence
-from enterprise_rating.entities.category import Category
-from enterprise_rating.entities.input_variable import Input
+from kiro_insbridge.enterprise_rating.entities.algorithm import AlgorithmSequence
+from kiro_insbridge.enterprise_rating.entities.category import Category
+from kiro_insbridge.enterprise_rating.entities.input_variable import Input
 
 
 class DataDictionary(BaseModel):

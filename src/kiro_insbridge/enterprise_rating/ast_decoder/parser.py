@@ -3,11 +3,11 @@
 # pylint: disable=unused-import, unused-variable, unused-argument, missing-module-docstring
 from collections.abc import Callable
 
-from enterprise_rating.ast_decoder.defs import MULTI_IF_SYMBOL
-from enterprise_rating.ast_decoder.renderer import render_node
-from enterprise_rating.entities.algorithm import Algorithm
-from enterprise_rating.entities.dependency import DependencyBase
-from enterprise_rating.entities.program_version import ProgramVersion
+from kiro_insbridge.enterprise_rating.ast_decoder.defs import MULTI_IF_SYMBOL
+from kiro_insbridge.enterprise_rating.ast_decoder.renderer import render_node
+from kiro_insbridge.enterprise_rating.entities.algorithm import Algorithm
+from kiro_insbridge.enterprise_rating.entities.dependency import DependencyBase
+from kiro_insbridge.enterprise_rating.entities.program_version import ProgramVersion
 
 from .ast_nodes import (ArithmeticNode, AssignmentNode, ASTNode, CompareNode,
                         FunctionNode, IfNode, JumpNode, RawNode, TypeCheckNode)
