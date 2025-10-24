@@ -6,7 +6,7 @@ The **Version Export Flow** processes SoftRater Package (SRP) files to extract a
 
 **Flow File:** `src/kiro_insbridge/prefect/dags/version-export/hourly.py`
 
-**Password:** `SrpT3st2025!`
+**Password:** ``
 
 ---
 
@@ -26,7 +26,7 @@ For each unprocessed .srp file:
 
 #### Step 1: Extract to Temp Directory
 - Extract .srp file (password-protected zip) to thread-specific temp directory
-- Password: `SrpT3st2025!`
+- Password: ``
 - **Temp Location:** `/tmp/srp_{filename}_XXXXX/`
 
 #### Step 2: Find RTE XML File

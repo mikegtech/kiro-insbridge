@@ -5,6 +5,7 @@ from typing import Annotated, Literal, get_args
 from pydantic import BaseModel, Field
 
 from kiro_insbridge.enterprise_rating.entities.instruction import Instruction
+from kiro_insbridge.enterprise_rating.entities.qualifier import Qualifier
 
 
 class DependencyBase(BaseModel):
@@ -23,6 +24,7 @@ class DependencyBase(BaseModel):
     dependency_vars: list[Dependency] | None = None
     # dependency_vars: dict[str, Dependency] | None = None
     steps: list[Instruction] | None = None
+    qualifiers: list[Qualifier]
 
     class Config:
         extra = "ignore"  # Ignore extra fields not defined in the model

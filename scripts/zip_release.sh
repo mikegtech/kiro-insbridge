@@ -5,7 +5,7 @@ set -e
 EXTRACT_DIR="/home/mike/Downloads/SRP/srp_for_oracle/Extract"
 RELEASES_DIR="/home/mike/Downloads/SRP/srp_for_oracle/Releases"
 TEMP_DIR="/tmp/srp_release_build_$$"
-PASSWORD="SrpT3st2025!"
+PASSWORD=""
 RELEASE_DATE=$(date +%Y%m%d_%H%M%S)
 RELEASE_NAME="SRP_BATCH_REL_${RELEASE_DATE}.srp"
 

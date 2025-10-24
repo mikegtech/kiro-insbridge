@@ -6,7 +6,7 @@ The **SRP Zip to S3 Flow** processes SoftRater Package (SRP) files, extracts met
 
 **Flow File:** `src/kiro_insbridge/prefect/dags/srp-zip/hourly.py`
 
-**Password:** `SrpT3st2025!`
+**Password:** ``
 
 ---
 
@@ -35,7 +35,7 @@ For each .srp file (regular or extracted from release):
 
 #### Step 1: Extract
 - Unzip to staging directory
-- Password: `SrpT3st2025!`
+- Password: ``
 - **Staging Location:** `data/srps/staging/{filename}/`
 
 #### Step 2: Parse Header
@@ -210,7 +210,7 @@ S3_REGION=us-east-2
 AWS_PROFILE=your-profile-name
 
 # SRP Processing
-SRP_ZIP_PASSWORD=SrpT3st2025!
+SRP_ZIP_PASSWORD=
 ENVIRONMENT=local
 ```
 
@@ -264,7 +264,7 @@ The flow logs show:
 
 Example log:
 ```
-03:05:09.188 | INFO | Flow run 'brown-shellfish' - Processing 111 total zip(s): 74 regular + 37 from releases
+03:05:09.188 | INFO | Flow run 'brown-shellfish' - Processing 5 total zip(s): 2 regular + 3 from releases
 03:05:10.634 | INFO | Task run 'upload_dir_to_s3-7a8' - Uploaded 1 objects to s3://local-packages-bucket/srp-data/2025/03/31
 03:05:10.918 | INFO | Task run 'write_manifest_ndjson-175' - Finished in state Completed()
 ```

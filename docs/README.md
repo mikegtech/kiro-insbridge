@@ -89,7 +89,7 @@ uv sync --group dev
 
 # Set environment variables
 export ENVIRONMENT=local
-export SRP_ZIP_PASSWORD=SrpT3st2025!
+export SRP_ZIP_PASSWORD=
 ```
 
 ### Running the Pipeline
@@ -261,7 +261,7 @@ S3_BUCKET=local-packages-bucket
 S3_REGION=us-east-2
 
 # SRP Processing
-SRP_ZIP_PASSWORD=SrpT3st2025!
+SRP_ZIP_PASSWORD=
 ENVIRONMENT=local
 ```
 
@@ -285,7 +285,7 @@ local:
 - Verify files don't have `.version_processed` markers
 
 ### Password errors
-- Confirm password is `SrpT3st2025!`
+- Confirm password is ``
 - Check if pyzipper is installed: `uv pip list | grep pyzipper`
 
 ### S3 upload failures

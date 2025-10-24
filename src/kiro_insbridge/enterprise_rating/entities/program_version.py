@@ -20,7 +20,7 @@ class ProgramVersion(BaseModel):
     line: str
     schema_id: str
     program_id: str
-    program_name: str = "Auto"
+    program_name: str = ""
     version: int
     version_name: str
     primary_key: str
