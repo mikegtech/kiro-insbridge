@@ -1,0 +1,96 @@
+# Formatting snippets and step-type labels for AST node types
+
+# 1) Step-Type Labels (from legacy INS_TYPE mappings)
+step_types:
+  "0": "Advanced Options"
+  "1": "IF"
+  "2": "Program Callout"
+  "4": "Create Category Instance"
+  "5": "String Addition"
+  "50": "IF All (All)"
+  "51": "IF No (All)"
+  "52": "IF Any (All)"
+  "53": "IF Date"
+  "54": "IF All Current Path"
+  "55": "IF No Current Path"
+  "57": "Date Difference (Days)"
+  "58": "Date Difference (Months)"
+  "59": "Date Difference (Years)"
+  "60": "The Sum (Across All)"
+  "61": "Multiply (Across All)"
+  "84": "Absolute Value"
+  "86": "String Concatenation"
+  "93": "Rank Category Available"
+  "94": "Rank Category Instance"
+  "98": "Numeric IF"
+  "99": "Alpha IF"
+  "120": "Get Category Item"
+  "121": "Get Ranked Category Item"
+  "122": "Get Category Item Available"
+  "123": "Get Ranked Category Item Available"
+  "124": "Set Category Item"
+  "125": "Set Ranked Category Item"
+  "126": "Arithmetic Operation"
+  "127": "Mask"
+  "128": "Math Func Exp"
+  "129": "Math Func Log10"
+  "130": "Math Func Exp6"
+  "131": "Math Func Rand"
+  "132": "Math Func Ceil"
+  "133": "Math Func Floor"
+  "134": "Trig Func Incomplete Gamma"
+  "135": "Trig Func Gamma"
+  "136": "Is Even"
+  "137": "Is Odd"
+  "186": "Set Message Using Template"
+  "200": "Query Data Source"
+  "300": "Create Category Instance"
+  # …add any missing codes you need…
+
+# 2) AST-level templates (template_id → snippet)
+templates:
+  IF_COMPARE: |
+    {%- for c in conditions %}
+    {%- if not loop.first %} **{{ joiner }}** {%- endif %}
+    IF *{{ c.left }}* **{{ c.op }}** *{{ c.right }}*
+    {%- endfor %}
+
+    then *[{% if true_target is none or true_target == -2 %}DONE{% else %}Step {{ true_target }}{% endif %}]*  
+    else *[{% if false_target is none or false_target == -2 %}DONE{% else %}Step {{ false_target }}{% endif %}]*
+  MULTI_IF: |
+    {%- for cond in conditions -%}
+      {%- if not loop.first -%} **{{ joiner }}** {%- endif -%}
+      *{{ cond.left.raw }}* **{{ cond.operator }}** *{{ cond.right.raw }}*
+    {%- endfor -%}
+  ASSIGNMENT: |
+    {{ args.split(',') | map('trim') | select | join(' ') }} then {% if next_true == '-2' %} [DONE] {% else %} *[Step {{ next_true }}]* {% endif %}
+  STRING_CONCAT: |
+    {{ args.split(',') | map('trim') | select | join(' ') }} then {% if next_true == '-2' %} [DONE] {% else %} *[Step {{ next_true }}]* {% endif %}
+  JUMP: |
+    {% if target == -2 %}
+    **DONE**
+    {% else %}
+    **Then** *[Step {{ target }}]*
+    {% endif %}
+  DATE_DIFF: |
+    Calculate *{{target}}* as difference in days between *{left}* and *{{right}}*
+  ARITHMETIC: |
+    *{{left}}* **{{operator}}** *{{right}}*{{rounding}}
+  FUNCTION_CALL: |
+    **{{ name }}**({{ args|join(", ") }}){% if round_spec %} • rounded to {{ round_spec }} places{% endif %}
+  MASK: |
+    Mask *{{ left }}* by *{{ right }}*
+  EMPTY: |
+    No operation
+  QUERY_DATA_SOURCE: |
+    Query data source *{{ target }}*
+  RANK_FLAG: |
+    Rank or flag *{{ target }}*
+  RANK_ACROSS_CATEGORY_ALL_AVAILABLE_ALT: |
+    Rank across category (all available) *{{ target }}*
+  RANK_ACROSS_CATEGORY_ALT: |
+    Rank across category *{{ target }}*
+  SET_UNDERWRITING_TO_FAIL: |
+    Set underwriting to fail
+
+  # …and so on for all node patterns…

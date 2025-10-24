@@ -1,0 +1,46 @@
+version: "3"
+dotenv: [.env]
+vars:
+  PYTHON_VERSION: "3.12" # Change this to your desired Python version
+
+tasks:
+  pin-python:
+    desc: Pin Python version using uv
+    cmds:
+      - uv python pin {{.PYTHON_VERSION}}
+
+  sync-dev:
+    desc: Sync development dependencies using uv
+    cmds:
+      - uv sync --extra dev
+
+  sync:
+    desc: Sync production dependencies only
+    cmds:
+      - uv sync --no-dev
+
+  install:
+    desc: Install the project in development mode
+    cmds:
+      - uv sync --dev
+
+  clean:
+    desc: Clean up virtual environment and cache
+    cmds:
+      - uv cache clean
+      - rm -rf .venv
+
+  databricks:login:
+    desc: Login to Databricks
+    cmds:
+      - databricks auth login --host {{.DATABRICKS_HOST}}
+
+  lint:
+    desc: Run pre-commit hooks
+    cmds:
+      - uvx --from pre-commit pre-commit run --all-files
+
+  flow:hourly:
+    desc: "Run the SRP hourly flow (ingest optional, then load)"
+    cmds:
+      - uv run --active ./prefect/dags/srp-zip/hourly.py
